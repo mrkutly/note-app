@@ -8,10 +8,13 @@ const notes = require('./notes.js');
 
 const argv = yargs.argv;
 const command = argv._[0];
+let message;
 
 switch (command) {
   case 'add':
-    notes.addNote(argv.title, argv.body);
+    const note = notes.addNote(argv.title, argv.body);
+    message = (!!note ? `Note added: ${note.title}` : "A note with that title already exists.")
+    console.log(message)
     break;
 
   case 'list':
@@ -23,7 +26,9 @@ switch (command) {
     break;
 
   case 'remove':
-    notes.removeNote(argv.title);
+    const noteRemoved = notes.removeNote(argv.title);
+    message = (noteRemoved ? `Note was removed` : `Note not found`);
+    console.log(message);
     break;
 
   default:
